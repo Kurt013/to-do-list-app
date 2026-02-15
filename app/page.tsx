@@ -1,11 +1,17 @@
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
-import { Welcome } from '../components/Welcome/Welcome';
+'use client';
 
-export default function HomePage() {
+import { useEffect, useState } from 'react';
+
+export default function Home() {
+  const [users, setUser] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/users')
+      .then((res) => res.json())
+      .then(setUser);
+  }, []);
+
   return (
-    <>
-      <Welcome />
-      <ColorSchemeToggle />
-    </>
+    <div>Hello {users.length > 0 ? users.map((user) => user.username).join(', ') : 'No users'}</div>
   );
 }
